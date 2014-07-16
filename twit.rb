@@ -9,7 +9,7 @@ end
 
 #screen_name =  String.new ARGV[0]
 
-timeline = client.user_timeline('Atul_Prince')
+timeline = client.user_timeline('')
 i=0
 timeline.each do |t|
        i+=1 
