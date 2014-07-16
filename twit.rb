@@ -1,10 +1,10 @@
 require 'rubygems'
 require 'twitter'
 client = Twitter::REST::Client.new do |config|
-  config.consumer_key        = "8NxBrDIEuv0FCboRbp6u2iTGQ"
-  config.consumer_secret     = "EYDCZDOxKvbq4ZjDucb9WEk98hwuuF06iPBXRRkNPro4QKtdnQ"
-  config.access_token        = "217117828-SpzCbsawA672puIiRpIACZWXfPC9XFIhOCGagiwq"
-  config.access_token_secret = "YvfgSFJ6j3FS4mgR3jWor5hnsVjaS9tlwWX1nGeG05CBH"
+  config.consumer_key        = ""
+  config.consumer_secret     = ""
+  config.access_token        = ""
+  config.access_token_secret = ""
 end
 
 #screen_name =  String.new ARGV[0]
