@@ -1,4 +1,7 @@
-#Program to create a linked list in Ruby
+#Program to create a Singly linked list in Ruby
+#Define a Node class that holds the following
+# =>next : stores the next Node in the linked list.
+# =>value : stores the value of the current list element.
 class Node
   attr_accessor :value, :next
   def initialize(value)
@@ -6,6 +9,8 @@ class Node
   end
 end
 
+# => head :  pointer to the head of the linked list
+# => tail:  pointer to the tail of the linked list
 class LinkedList
   attr_accessor :head, :tail
   #Initialize head and tail to same initail node
