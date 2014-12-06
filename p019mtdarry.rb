@@ -8,11 +8,13 @@ def mtdarry
   1.times do |num|
     num = 2
     square = num * num
-    return num, square
+    cube = num * num * num
+    return num, square, cube
   end
 end
 
 # using parallel assignment to collect the return value
-num, square = mtdarry
+num, square, cube = mtdarry
 puts num
 puts square
+puts cube
