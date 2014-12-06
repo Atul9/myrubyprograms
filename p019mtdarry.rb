@@ -5,7 +5,8 @@
 # passing in values from zero to num-1
 
 def mtdarry
-  10.times do |num|
+  1.times do |num|
+    num = 2
     square = num * num
     return num, square
   end
