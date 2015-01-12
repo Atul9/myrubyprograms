@@ -12,7 +12,7 @@ grid = [[0, 0, 3, 0, 7, 0, 9, 0, 0],
           [0, 0, 4, 7, 0, 5, 0, 0, 2],
           [0, 0, 6, 0, 2, 0, 7, 0, 0]
   ]
-original_grid = grid
+$original_grid = grid
 
 def display_grid(grid) # Function to display the grid
   grid.each{ |row| puts "|" + row.join(" ") + "|" }# Use join method of array class to remove the white spaces.
@@ -63,6 +63,8 @@ def check_validity(number, row, col, grid) # Function to check if the number sho
   elsif (!(0..9).to_a.include?(number) || !(0..8).to_a.include?(row) || !(0..8).to_a.include?(col))
     puts "Error :: Number entered out of range."
     display_grid(grid)
+  elsif (original_grid[row][col] != 0)  # Working on if the number is to be entered on the original grid
+    puts "Error :  You cannot edit the numbers which are entered set at the beginning."
   elsif (cube_valid(row, col, number, grid) && row_valid?(row, number, grid) &&  col_valid?(col, number, grid))# && (!number.zero?))
     store_number(row, col, number, grid)
     puts "Number has been stored at position row : #{row}, col : #{col}"
