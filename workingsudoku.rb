@@ -16,6 +16,7 @@ class Sudoku
 
     @original_grid = @grid.collect {|row| row.collect {|col| col}}
   end
+
   def store_number(row, col, number) # Function to store the number in the grid.
     @grid[row][col] = number
   end
@@ -91,6 +92,12 @@ def accept_number # function to accept number from user.
     puts "Enter the number to be placed and its row, column position in the range of 1 to 9 respectively.\nTo replace a number first insert 0 at that position"
     puts "Enter 10 thrice to quit"
     check_validity(gets.chomp.to_i , gets.chomp.to_i - 1, gets.chomp.to_i - 1)
+  end
+end
+class User
+  def accept_number
+    puts "Enter a number"
+    gets
   end
 end
 sudo = Sudoku.new
