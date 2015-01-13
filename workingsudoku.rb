@@ -30,7 +30,7 @@ class Sudoku
     @grid[row][col] = number
   end
 
-  def display_grid # Function to display the grid
+ def display_grid # Function to display the grid
     @grid.each{ |row| puts "|" + row.join(" ") + "|" }# Use join method of array class to remove the white spaces.
     accept_number
   end
