@@ -1,5 +1,14 @@
 #Ruby sudoku game program. Assume that the grid is of 9 * 9.
+
 class InvalidSudokuInput < Exception; end
+
+class User
+  def self.accept_number
+    puts "Enter the number to be placed and its row, column position in the range of 1 to 9 respectively.\nTo replace a number insert another number at that position"
+    puts "Enter 11 thrice to quit"
+    return gets.chomp.to_i, gets.chomp.to_i - 1, gets.chomp.to_i - 1
+  end
+end
 
 class Sudoku
   def initialize
@@ -61,44 +70,37 @@ class Sudoku
     !arr.include? number  # Returns true if array does not include number.
   end
 
-  def check_validity(number, row, col) # Function to check if the number should be stored in the grid
-    if number == 10 && row == 10 && col == 10
+  def check_validity(arr) # Function to check if the number should be stored in the grid
+    number, row, col = arr
+    if number == 11 && row == 10 && col == 10
       puts "program exited"
       exit
-    elsif (!(0..9).to_a.include?(number) || !(0..8).to_a.include?(row) || !(0..8).to_a.include?(col))
-      raise(InvalidSudokuInput,"Error :: Number entered out of range.")
-    elsif (@original_grid[row][col] != 0)  # Working on if the number is to be entered on the original grid
-      raise(InvalidSudokuInput, "Error :  You cannot edit the numbers which are entered set at the beginning. #{@original_grid[row][col]} #{row} #{col} #{number}")
-    elsif (cube_valid(row, col, number) && row_valid?(row, number) &&  col_valid?(col, number))# && (!number.zero?))
-      store_number(row, col, number)
-      puts "Number has been stored at position row : #{row}, col : #{col}"
-      display_grid
-    else
-      puts "Number already exists"
-      display_grid
-      accept_number
-      #end
     end
-  rescue
-    puts "Exception rescued"
-    display_grid
+    begin
+      if (!(0..9).to_a.include?(number) || !(0..8).to_a.include?(row) || !(0..8).to_a.include?(col))
+        raise InvalidSudokuInput.new("Error :: Number entered out of range.")
+      elsif (@original_grid[row][col] != 0)  # Working on if the number is to be entered on the original grid
+        raise InvalidSudokuInput.new("Error :  You cannot edit the numbers which are entered set at the beginning.")
+      elsif (cube_valid(row, col, number) && row_valid?(row, number) &&  col_valid?(col, number))# && (!number.zero?))
+        store_number(row, col, number)
+        puts "Number has been stored at position row : #{row}, col : #{col}"
+        display_grid
+      else
+        raise InvalidSudokuInput.new("Number already exists")
+      end
+    rescue InvalidSudokuInput=> e
+      puts e.message
+      display_grid
+    end
+  end
+  def accept_number # function to accept number from user.
+    if !@grid.flatten.include? 0 # flatten method returns a new 1-D array.
+      puts "Game completed"
+    else
+      check_validity(User.accept_number)
+    end
   end
 end
 
-def accept_number # function to accept number from user.
-  if !@grid.flatten.include? 0 # flatten method returns a new 1-D array.
-    puts "Game completed"
-  else
-    puts "Enter the number to be placed and its row, column position in the range of 1 to 9 respectively.\nTo replace a number first insert 0 at that position"
-    puts "Enter 10 thrice to quit"
-    check_validity(gets.chomp.to_i , gets.chomp.to_i - 1, gets.chomp.to_i - 1)
-  end
-end
-class User
-  def accept_number
-    puts "Enter a number"
-    gets
-  end
-end
 sudo = Sudoku.new
 sudo.display_grid
