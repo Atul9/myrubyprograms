@@ -14,7 +14,7 @@ class Sudoku
            ['', '', 6, '', 2, '', 7, '', '']
           ]
 
-  @original_grid = @grid
+  @original_grid = @grid.collect {|row| row.collect {|col| col}}
   end
   def store_number(row, col, number) # Function to store the number in the grid.
     @grid[row][col] = number
@@ -61,15 +61,13 @@ class Sudoku
   end
 
   def check_validity(number, row, col) # Function to check if the number should be stored in the grid
-    if number == 10 || row == 10 || col == 10
+    if number == 10 && row == 10 && col == 10
       puts "program exited"
       exit
-    elsif number == 0
-      store_number(row, col, number,@grid)
     elsif (!(0..9).to_a.include?(number) || !(0..8).to_a.include?(row) || !(0..8).to_a.include?(col))
       puts "Error :: Number entered out of range."
       display_grid
-    elsif (@original_grid[row][col] != 0)  # Working on if the number is to be entered on the original grid
+    elsif (@original_grid[row][col] != '')  # Working on if the number is to be entered on the original grid
       puts "Error :  You cannot edit the numbers which are entered set at the beginning. #{@original_grid[row][col]} #{row} #{col} #{number}"
     elsif (cube_valid(row, col, number) && row_valid?(row, number) &&  col_valid?(col, number))# && (!number.zero?))
       store_number(row, col, number)
@@ -83,7 +81,7 @@ class Sudoku
   end
 
   def accept_number # function to accept number from user.
-    if !@grid.flatten.include? 0 # flatten method returns a new 1-D array.
+    if !@grid.flatten.include? '' # flatten method returns a new 1-D array.
       puts "Game completed"
     else
       puts "Enter the number to be placed and its row, column position in the range of 1 to 9 respectively.\nTo replace a number first insert 0 at that position"
