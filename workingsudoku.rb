@@ -23,7 +23,8 @@ class Sudoku
              [0, 0, 6, 0, 2, 0, 7, 0, 0]
     ]
 
-    @original_grid = @grid.collect {|row| row.collect {|col| col}}
+    #@original_grid = @grid.collect {|row| row.collect {|col| col}}
+    @original_grid = @grid.dup
   end
 
   def store_number(row, col, number) # Function to store the number in the grid.
@@ -42,6 +43,7 @@ class Sudoku
       if range1.include? ((row / 3) + (col / 3)) + (row / 3) * 2 # To get a 3 x 3 cube number
         [(0..2), (3..5), (6..8)].each do |range2| # If it includes the cube
           #number then iterate again to check if the column is in the cube.
+          #cube = range1.collect{|row1| @grid[row1][range2]} if range2.include?(col)
           if range2.include? col
             range1.each do |row1| # store all the elements of that cube and return
               cube << @grid[row1][range2] # saves the grid of 3 x 3 in array
