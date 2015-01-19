@@ -2,17 +2,14 @@
 
 class InvalidSudokuInput < Exception; end
 
-class User
-  def self.accept_number
+class Sudoku
+
+  def accept_input
     puts "Enter the number to be placed and its row, column position in the range of 1 to 9 respectively.\nTo replace a number insert another number at that position"
-    #puts "Enter your name:"
-    #@@name = gets.chomp
     puts "Enter 11 thrice to quit"
     return gets.chomp.to_i, gets.chomp.to_i - 1, gets.chomp.to_i - 1
   end
-end
 
-class Sudoku
   def initialize
     @grid = [[0, 0, 3, 0, 7, 0, 9, 0, 0],
              [2, 0, 0, 3, 0, 8, 6, 0, 0],
@@ -25,7 +22,7 @@ class Sudoku
              [0, 0, 6, 0, 2, 0, 7, 0, 0]
     ]
 
-    @original_grid = @grid.dup
+    @original_grid = @grid.collect{|row| row.collect{|col| col}}
   end
 
   def store_number(row, col, number) # Function to store the number in the grid.
@@ -34,7 +31,7 @@ class Sudoku
 
   def display_grid # Function to display the grid
     @grid.each{ |row| puts "|" + row.join(" ") + "|" }# Use join method of array class to remove the white spaces.
-    accept_number
+    check_validity(accept_input)
   end
 
   def get_cube(row, col)
@@ -65,12 +62,6 @@ class Sudoku
   end
 
   def col_valid?(col, number, temp_grid) # Method to check if the number already exists in the column.
-    #arr = []
-    #9.times do |i|
-    #  arr[i] = @grid[i][col] # Keep the col no constant and iterate the row number.
-    #  i = i + 1
-    #end
-    #!arr.include? number  # Returns true if array does not include number.
     !temp_grid[col].include? number
   end
 
@@ -84,7 +75,8 @@ class Sudoku
       if (!(0..9).to_a.include?(number) || !(0..8).to_a.include?(row) || !(0..8).to_a.include?(col))
         raise InvalidSudokuInput.new("Error :: Number entered out of range.")
       elsif (@original_grid[row][col] != 0)  # Working on if the number is to be entered on the original grid
-        @original_grid.each{|row1| puts '|' + row.join(" ") + '|'}
+        puts row, col
+        @original_grid.each{|row1| puts '|' + row1.join(" ") + '|'}
         raise InvalidSudokuInput.new("Error :  You cannot edit the numbers which are entered set at the beginning.")
       elsif (cube_valid(row, col, number) && row_valid?(row, number) &&  col_valid?(col, number, @grid.transpose))# && (!number.zero?))
         store_number(row, col, number)
@@ -102,7 +94,7 @@ class Sudoku
     if !@grid.flatten.include? 0 # flatten method returns a new 1-D array.
       puts "Game completed"
     else
-      check_validity(User.accept_number)
+      check_validity(accept_input)
     end
   end
 end
