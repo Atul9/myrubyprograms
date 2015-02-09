@@ -1,7 +1,4 @@
-#require 'rubygems'
 require 'mongo' #Use mongo gem via require Kernel method
-#require 'bson'
-#require 'bson_ext'
 include Mongo #Include Mongo so that the Mongo classes are available without
 #having to specify the Mongo namespace.
 client = MongoClient.new #A MongoClient instance represents a connection to the Mongodb.
